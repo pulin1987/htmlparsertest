@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+       
+       <!-- Quartz配置 -->
+    <bean id="schedulManager" class="com.cd.pulin.quartz.QuartzXmlService" init-method="test"></bean>
+
+    <!--  定时执行 -->
+	<bean id="quartzTimeManagerTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="quartzService" />
+		</property>
+		<property name="targetMethod">
+			<value>job3</value>
+		</property>
+		<!-- 是否允许同时存在（false 上一个任务没有结束，不启动本次job） -->
+      <property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- <bean id="quartzTimeManagerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"> -->
+	<bean id="quartzTimeManagerTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="quartzTimeManagerTask" />
+		</property>
+		<property name="cronExpression">
+		    <!-- 10分钟执行一次 -->
+			<value>* 0/10 * * * ?</value>
+		</property>
+	</bean>
+
+	<bean autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref local="quartzTimeManagerTrigger" />
+			</list>
+		</property>
+	</bean>
+
+</beans>

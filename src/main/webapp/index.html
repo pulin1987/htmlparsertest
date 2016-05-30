@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+
+
+
+$(function(){  
+	alert("")
+    $.ajax({  
+        url : 'http://comment.d.cn/comment/top/update?commentId=2278452&count=2',  
+        data : {},// 这里可以传一些参数  
+        type : 'get',// 一定使用get  
+        async : false,// 关掉异步  
+        dataType : 'jsonp',// jsonp类型 
+        jsonp : 'callback',
+        success : function(json){// json就是后台传过来的对象  
+            alert(json);  
+        },
+        error:function(){
+        	alert("2")
+        }
+    });  
+});  
+
+/* $(function(){  
+    $.ajax({  
+        url : 'http://comment.d.cn/comment/top/update?commentId=2278452&count=2',  
+        data : {},// 这里可以传一些参数  
+        type : 'get',// 一定使用get  
+        async : false,// 关掉异步  
+        dataType : 'jsonp',// jsonp类型  
+        jsonp : 'callback',// 回调函数  参数 名称  例如 callback=test,mycallback=test其中的callback和mycallback，默认为callback  
+        jsonpCallback: 'test',// 这个test需要和后台传过来的方法对应上，比如后台传test({json})，那这里就是test  
+        success : function(json){// json就是后台传过来的对象  
+            alert(json);  
+        }  
+    });  
+}); */
+
+</script>
+</head>
+<body>
+
+</body>
+</html>
